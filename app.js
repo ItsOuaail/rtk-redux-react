@@ -1,4 +1,5 @@
-const { createAction, nanoid, createReducer, isAction } = require("@reduxjs/toolkit");
+const { createAction, nanoid, createReducer, isAction, configureStore } = require("@reduxjs/toolkit");
+const logger = require('redux-logger').createLogger();
 //InitialisteState
 const initialisteState = {
     counter: 0,
@@ -55,3 +56,15 @@ const counterSlice1 = createAction(initialisteState, {
     },
 })
 //Store
+const store = configureStore({
+    reducer: counterSlice,
+    middleware: (getDefaultMiddleware)=>getDefaultMiddleware().concat(logger)
+})
+
+//dispatch action
+store.dispatch(increment());
+store.dispatch(increment());
+store.dispatch(increment());
+store.dispatch(increment());
+
+console.log(store.getState());
