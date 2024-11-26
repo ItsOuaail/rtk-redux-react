@@ -1,4 +1,4 @@
-const { createAction, nanoid, createReducer } = require("@reduxjs/toolkit");
+const { createAction, nanoid, createReducer, isAction } = require("@reduxjs/toolkit");
 //InitialisteState
 const initialisteState = {
     counter: 0,
@@ -21,7 +21,7 @@ const incrementBy = createAction("INCREMENT_BY", (amount, user) => {
 //2.map object notaion
 
 //Builder callback
-createReducer(initialisteState, (builder) => {
+const counterSlice = createReducer(initialisteState, (builder) => {
     //increment
     builder.addCase(increment, (state) => {
         state.counter += 1;
@@ -38,5 +38,20 @@ createReducer(initialisteState, (builder) => {
     builder.addCase(incrementBy, (state) => {
         state.counter += isAction.payload.amount;
     });
+})
+//2.map object notaion
+const counterSlice1 = createAction(initialisteState, {
+    [increment]: (state) => {
+        state.counter +=1;
+    },
+    [decrement]: (state) => {
+        state.counter -=1;
+    },
+    [resetCounter]: (state) => {
+        state.counter =0;
+    },
+    [incrementBy]: (state) => {
+        state.counter += isAction.payload.amount;
+    },
 })
 //Store
